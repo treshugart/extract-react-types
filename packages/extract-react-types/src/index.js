@@ -1560,10 +1560,9 @@ export function extractReactTypes(
   filename?: string,
   inputResolveOptions?: Object
 ) {
-  let { resolveOptions, parserOpts } = getContext(typeSystem, filename, inputResolveOptions);
-
-  let file = createBabelFile(code, { parserOpts, filename });
-  return convert(file.path, { resolveOptions, parserOpts });
+  let context = getContext(typeSystem, filename, inputResolveOptions);
+  let file = createBabelFile(code, { parserOpts: context.parserOpts, filename });
+  return exportedComponents(file.path, 'all', context)
 }
 
 function exportedComponents(programPath, componentsToFind: 'all' | 'default', context) {
